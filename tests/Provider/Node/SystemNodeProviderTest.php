@@ -252,10 +252,12 @@ class SystemNodeProviderTest extends TestCase
         /*/ Act /*/
         $provider = new SystemNodeProvider();
         $provider->getNode();
-        $provider->getNode();
+        $node = $provider->getNode();
 
         /*/ Assert /*/
         $this->assertMockFunctions(null, null, ['netstat -ie 2>&1'], ['PHP_OS'], ['disable_functions']);
+
+        $this->assertFalse($node);
     }
 
     /**
@@ -280,7 +282,7 @@ class SystemNodeProviderTest extends TestCase
 
         /*/ Act /*/
         $provider = new SystemNodeProvider();
-        $provider->getNode();
+        $node = $provider->getNode();
 
         /*/ Assert /*/
         $globBodyAssert = null;
@@ -296,6 +298,8 @@ class SystemNodeProviderTest extends TestCase
             ['PHP_OS'],
             ['disable_functions']
         );
+
+        $this->assertFalse($node);
     }
 
     /**
