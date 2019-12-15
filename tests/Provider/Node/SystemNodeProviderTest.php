@@ -3,10 +3,10 @@
 namespace Ramsey\Uuid\Test\Provider\Node;
 
 use AspectMock\Proxy\FuncProxy;
+use AspectMock\Test as AspectMock;
 use InvalidArgumentException;
 use Ramsey\Uuid\Provider\Node\SystemNodeProvider;
 use Ramsey\Uuid\Test\TestCase;
-use AspectMock\Test as AspectMock;
 
 /**
  * Tests for the SystemNodeProvider class
@@ -43,7 +43,9 @@ class SystemNodeProviderTest extends TestCase
 
     const PROVIDER_NAMESPACE = 'Ramsey\\Uuid\\Provider\\Node';
 
-    /** @var FuncProxy[] */
+    /**
+     * @var FuncProxy[]
+     */
     private $functionProxies = [];
 
     /**
@@ -55,7 +57,7 @@ class SystemNodeProviderTest extends TestCase
      * @param string $netstatOutput
      * @param string $expected
      */
-    public function testGetNodeReturnsSystemNodeFromMacAddress($netstatOutput, $expected)
+    public function testGetNodeReturnsSystemNodeFromMacAddress($netstatOutput, $expected): void
     {
         /*/ Arrange mocks for native functions /*/
         $this->arrangeMockFunctions(
@@ -92,7 +94,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @param string $netstatOutput
      */
-    public function testGetNodeShouldNotReturnsSystemNodeForInvalidMacAddress($netstatOutput)
+    public function testGetNodeShouldNotReturnsSystemNodeForInvalidMacAddress($netstatOutput): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -124,7 +126,7 @@ class SystemNodeProviderTest extends TestCase
      * @param string $formatted
      * @param string $expected
      */
-    public function testGetNodeReturnsNodeStrippedOfNotationalFormatting($formatted, $expected)
+    public function testGetNodeReturnsNodeStrippedOfNotationalFormatting($formatted, $expected): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -155,7 +157,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @param string $formatted
      */
-    public function testGetNodeDoesNotAcceptIncorrectNotationalFormatting($formatted)
+    public function testGetNodeDoesNotAcceptIncorrectNotationalFormatting($formatted): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -182,7 +184,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetNodeReturnsFirstMacAddressFound()
+    public function testGetNodeReturnsFirstMacAddressFound(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -209,7 +211,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetNodeReturnsFalseWhenNodeIsNotFound()
+    public function testGetNodeReturnsFalseWhenNodeIsNotFound(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -236,7 +238,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetNodeWillNotExecuteSystemCallIfFailedFirstTime()
+    public function testGetNodeWillNotExecuteSystemCallIfFailedFirstTime(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -269,7 +271,7 @@ class SystemNodeProviderTest extends TestCase
      * @param string $os
      * @param string $command
      */
-    public function testGetNodeGetsNetworkInterfaceConfig($os, $command)
+    public function testGetNodeGetsNetworkInterfaceConfig($os, $command): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -306,7 +308,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetNodeReturnsSameNodeUponSubsequentCalls()
+    public function testGetNodeReturnsSameNodeUponSubsequentCalls(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -334,7 +336,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testSubsequentCallsToGetNodeDoNotRecallIfconfig()
+    public function testSubsequentCallsToGetNodeDoNotRecallIfconfig(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -367,7 +369,7 @@ class SystemNodeProviderTest extends TestCase
      * @param string $os
      * @param string $command
      */
-    public function testCallGetsysfsOnLinux($os, $command)
+    public function testCallGetsysfsOnLinux($os, $command): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -416,7 +418,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testCallGetsysfsOnLinuxWhenGlobReturnsFalse()
+    public function testCallGetsysfsOnLinuxWhenGlobReturnsFalse(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -449,7 +451,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testCallGetsysfsOnLinuxWhenGlobReturnsEmptyArray()
+    public function testCallGetsysfsOnLinuxWhenGlobReturnsEmptyArray(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -482,7 +484,7 @@ class SystemNodeProviderTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function testGetNodeReturnsFalseWhenPassthruIsDisabled()
+    public function testGetNodeReturnsFalseWhenPassthruIsDisabled(): void
     {
         /*/ Arrange /*/
         $this->arrangeMockFunctions(
@@ -524,7 +526,7 @@ class SystemNodeProviderTest extends TestCase
         $passthruBody,
         $constantBody,
         $iniGetDisableFunctionsBody
-    ) {
+    ): void {
         $mockFunction = [
             self::MOCK_FILE_GET_CONTENTS => $fileGetContentsBody,
             self::MOCK_GLOB => $globBody,
@@ -543,11 +545,11 @@ class SystemNodeProviderTest extends TestCase
      *
      * Provide a NULL to assert a function is never called.
      *
-     * @param array|null $fileGetContentsAssert
-     * @param array|null $globBodyAssert
-     * @param array|null $passthruBodyAssert
-     * @param array|null $constantBodyAssert
-     * @param array|null $iniGetDisableFunctionsAssert
+     * @param string[]|array[]|null $fileGetContentsAssert
+     * @param string[]|array[]|null $globBodyAssert
+     * @param string[]|array[]|null $passthruBodyAssert
+     * @param string[]|array[]|null $constantBodyAssert
+     * @param string[]|array[]|null $iniGetDisableFunctionsAssert
      */
     private function assertMockFunctions(
         $fileGetContentsAssert,
@@ -555,7 +557,7 @@ class SystemNodeProviderTest extends TestCase
         $passthruBodyAssert,
         $constantBodyAssert,
         $iniGetDisableFunctionsAssert
-    ) {
+    ): void {
         $mockFunctionAsserts = [
             self::MOCK_FILE_GET_CONTENTS => $fileGetContentsAssert,
             self::MOCK_GLOB => $globBodyAssert,
@@ -589,7 +591,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function provideCommandPerOs()
+    public function provideCommandPerOs(): array
     {
         return [
             'windows' => ['Windows', 'ipconfig /all 2>&1'],
@@ -606,7 +608,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function provideInvalidNetStatOutput()
+    public function provideInvalidNetStatOutput(): array
     {
         return [
             'Not an octal value'                              => [
@@ -631,7 +633,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function provideInvalidNotationalFormats()
+    public function provideInvalidNotationalFormats(): array
     {
         return [
             ['01:23-45-67-89-ab'],
@@ -650,7 +652,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function provideNotationalFormats()
+    public function provideNotationalFormats(): array
     {
         return [
             ['01-23-45-67-89-ab', '0123456789ab'],
@@ -663,7 +665,7 @@ class SystemNodeProviderTest extends TestCase
      *
      * @return array[]
      */
-    public function provideValidNetStatOutput()
+    public function provideValidNetStatOutput(): array
     {
         return [
             /*/ Full output of related command /*/
